@@ -16,22 +16,26 @@ export async function getStaticProps(context) {
   }
 }
 
+
+
 const Accounts = ({accounts}) =>  {
     const [query, setQuery] = useState('');
-    const [id_, setId] = useState('')
+    // const [id_, setId] = useState('')
     
-    const handlePaid = async () => {
+
+
+    const handlePaid = async (_id) => {
       try {
-          await axios.get(`http://localhost:3005/api/${id_}`);
+          await axios.get(`http://localhost:3005/api/${_id}`);
           window.location.reload();
       } catch (err) {
           console.log(err);
       }
     };
 
-    const handleDelete = async () => {
+    const handleDelete = async (_id) => {
       try {
-          await axios.delete(`http://localhost:3005/api/${id_}`);
+          await axios.delete(`http://localhost:3005/api/${_id}`);
           window.location.reload();
       } catch (err) {
           console.log(err);
@@ -84,7 +88,7 @@ const Accounts = ({accounts}) =>  {
               <tbody>
                 {filtered?.map((item)=> (
                 <tr key={item.acc_id}
-                onClick = {() => setId(item._id)}
+                // onClick = {() => setId(item._id)}
                 >
                   <td>{item.acc_id}</td>
                   <td>{item.companyName}</td>
@@ -100,7 +104,7 @@ const Accounts = ({accounts}) =>  {
                   : 
                       <Button variant="success" id="button-addon1" style={{width: '80px'}}
                       
-                      onClick={handlePaid}
+                      onClick={()=> handlePaid(item._id)}
                       >
                         Pay
                       </Button>
@@ -108,7 +112,7 @@ const Accounts = ({accounts}) =>  {
                   </td>
                   <td>
                       <Button variant="danger" id="button-addon1" style={{width: '80px'}}
-                      onClick={handleDelete}
+                      onClick={()=>handleDelete(item._id)}
                       >
                         Delete
                       </Button>
