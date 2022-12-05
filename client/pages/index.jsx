@@ -1,6 +1,6 @@
 import Link from "next/Link";
 import axios from "axios";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Table from 'react-bootstrap/Table';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
@@ -16,13 +16,13 @@ export async function getStaticProps(context) {
   }
 }
 
-
-
 const Accounts = ({accounts}) =>  {
     const [query, setQuery] = useState('');
-    // const [id_, setId] = useState('')
-    
+    const [accountsState, setAcc] = useState(accounts);
 
+    useEffect(() => {
+      setAcc(accounts)
+  }, [])
 
     const handlePaid = async (_id) => {
       try {
@@ -48,12 +48,11 @@ const Accounts = ({accounts}) =>  {
     )
     }
 
-    const filtered = searchFilter(accounts)
+    const filtered = searchFilter(accountsState)
 
     const handleChange = (e) => {
     setQuery(e.target.value)
     }
-
 
     return (
         <div>
