@@ -1,0 +1,5 @@
+1. Start Server 
+      npm run build
+2. Start Client 
+      npm run build
+
