@@ -9,7 +9,7 @@ import Container from 'react-bootstrap/Container';
 
 
 export async function getStaticProps(context) {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/accounts`)
+  const response = await fetch(`http://localhost:3005/api/accounts`)
   const accounts = await response.json()
   return {
       props: {accounts},
