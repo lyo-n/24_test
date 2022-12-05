@@ -22,6 +22,7 @@ const Accounts = ({accounts}) =>  {
     const handlePaid = async (_id) => {
       try {
           await axios.get(`http://localhost:3005/api/${_id}`);
+          window.location.reload();
       } catch (err) {
           console.log(err);
       }
@@ -30,6 +31,7 @@ const Accounts = ({accounts}) =>  {
     const handleDelete = async (_id) => {
       try {
           await axios.delete(`http://localhost:3005/api/${_id}`);
+          window.location.reload();
       } catch (err) {
           console.log(err);
       }
