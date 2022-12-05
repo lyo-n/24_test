@@ -18,11 +18,11 @@ export async function getStaticProps(context) {
 
 const Accounts = ({accounts}) =>  {
     const [query, setQuery] = useState('');
-    const [accountsState, setAcc] = useState(accounts);
+    // const [accountsState, setAcc] = useState(accounts);
 
-    useEffect(() => {
-      setAcc(accounts)
-  }, [])
+  //   useEffect(() => {
+  //     setAcc(accounts)
+  // }, [])
 
     const handlePaid = async (_id) => {
       try {
@@ -48,11 +48,7 @@ const Accounts = ({accounts}) =>  {
     )
     }
 
-    const filtered = searchFilter(accountsState)
-
-    const handleChange = (e) => {
-    setQuery(e.target.value)
-    }
+    const filtered = searchFilter(accounts)
 
     return (
         <div>
@@ -87,7 +83,6 @@ const Accounts = ({accounts}) =>  {
               <tbody>
                 {filtered?.map((item)=> (
                 <tr key={item.acc_id}
-                // onClick = {() => setId(item._id)}
                 >
                   <td>{item.acc_id}</td>
                   <td>{item.companyName}</td>

@@ -58,7 +58,6 @@ class AccountController {
         try {
             let {_id} =  req.params
             const item = await AccountModel.findById(_id)
-            
             await item.deleteOne()
             return res.json({message: `Рахунок видалено`})
         } catch (e) {
