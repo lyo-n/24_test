@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -12,20 +12,7 @@ const Accounts = () => {
     const [companyName, setCompany] = useState('');
     const [gameName, setGame] = useState('');
     const [paymentAmount, setAmount] = useState('');
-    const [currency, setCurrency] = useState('');
-    const [payment, setPaid] = useState('');
-    const [paymentData, setPaidData] = useState('');
-    console.log("🚀 ~ file: accounts.jsx:18 ~ Accounts ~ paymentData", paymentData)
-    
-
-    useEffect(() => {
-        if (companyName || gameName || paymentAmount || currency) {
-            setPaid('Paid')
-        } else {
-            setPaidData(new Date().toISOString())
-        }
-    }, [])
-    
+    const [currency, setCurrency] = useState('');    
 
     const changeCompanyName = (e) => {
         const currentCompany = e.target.value;
@@ -46,7 +33,16 @@ const Accounts = () => {
 
     const handleCreate = async () => {
         const data = new FormData();
+        let payment;
+        let paymentData;
         try {
+            if (paymentAmount !== "") {
+                payment = "Paid";
+                paymentData = new Date().toISOString();
+            } else {
+                payment = "Not Paid";
+                paymentData = "";
+            }
             const newProduct = {
                 companyName,
                 gameName,
@@ -75,7 +71,7 @@ const Accounts = () => {
                 onChange={(e) => changeCompanyName(e)}
             >
                 <option value="" selected disabled hidden>Change Company</option>
-                <option value="Company1">Company1</option>
+                <option Value="Company1">Company1</option>
                 <option value="Company2">Company2</option>
                 <option value="Company3">Company3</option>
             </Form.Select>

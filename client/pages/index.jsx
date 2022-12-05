@@ -1,7 +1,6 @@
-import Head from 'next/head';
 import Link from "next/Link";
 import axios from "axios";
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import Table from 'react-bootstrap/Table';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
@@ -12,7 +11,6 @@ import Container from 'react-bootstrap/Container';
 export async function getStaticProps(context) {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/accounts`)
   const accounts = await response.json()
-  // setAccounts(accounts)
   return {
       props: {accounts},
   }
@@ -29,7 +27,16 @@ const Accounts = ({accounts}) =>  {
       } catch (err) {
           console.log(err);
       }
-  };
+    };
+
+    const handleDelete = async () => {
+      try {
+          await axios.delete(`http://localhost:3005/api/${id_}`);
+          window.location.reload();
+      } catch (err) {
+          console.log(err);
+      }
+    };
 
     const searchFilter = (array) => {
     return array.filter(
@@ -71,6 +78,7 @@ const Accounts = ({accounts}) =>  {
                   <th>Created</th>
                   <th>Payment Data</th>
                   <th>Click Paid</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -87,16 +95,23 @@ const Accounts = ({accounts}) =>  {
                   <td>{item.paymentData}</td>
                   <td>{item.createdAt}</td>
                   <td>
-                    {item.payment ?
+                    {item.paymentAmount !== "" ?
                       <p>Paid</p>
                   : 
-                      <Button variant="danger" id="button-addon1" style={{width: '80px'}}
+                      <Button variant="success" id="button-addon1" style={{width: '80px'}}
                       
                       onClick={handlePaid}
                       >
                         Pay
                       </Button>
                     }
+                  </td>
+                  <td>
+                      <Button variant="danger" id="button-addon1" style={{width: '80px'}}
+                      onClick={handleDelete}
+                      >
+                        Delete
+                      </Button>
                   </td>
                 </tr>
               ))}

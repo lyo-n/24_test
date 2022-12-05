@@ -26,14 +26,8 @@ class AccountController {
 
     async getCompanies (req, res, next) {
         try {
-            // let searchName = req.body
             let companies = await AccountModel.find();  
             const test = companies.filter(item => item.companyName == req.body.searchName);
-            
-
-            // let test = companies.filter(function(company) {
-            //     return company.companyName.includesCase(searchName)
-            // });
             return res.json(test)
         } catch (e) {
             console.log(e)
@@ -44,10 +38,14 @@ class AccountController {
 
     async updateAcc (req, res, next) {
         try {
-            // let _id = "638cddb5ea80441677d3d933";
             let { _id } = req.params            
             const post = await AccountModel.findById(_id)
             post.payment = "Paid"
+            post.paymentAmount = 5;
+            post.paymentData = new Date().toISOString();
+            if (post.currency == "") {
+                post.currency = "$";
+            }
             await post.save()
             return res.json(post)
         } catch (e) {
@@ -56,6 +54,18 @@ class AccountController {
         }
     }  
 
+    async delete (req, res, next) {
+        try {
+            let {_id} =  req.params
+            const item = await AccountModel.findById(_id)
+            
+            await item.deleteOne()
+            return res.json({message: `Рахунок видалено`})
+        } catch (e) {
+            сonsole.log(e)
+            next(e.message)
+        }
+    }
 
 }
 
